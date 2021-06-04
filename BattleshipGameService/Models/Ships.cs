@@ -7,7 +7,7 @@ namespace BattleshipGameService.Models
 {
     public class Ships
     {
-        private string[] battleShip = new string[5];
-        private string[] destroyers = new string[4];
+        private int[,] Grid = new int[10,10];
+        private bool[,] destroyers = new bool[10,10];
     }
 }
