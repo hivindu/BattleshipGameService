@@ -9,7 +9,6 @@ namespace BattleshipGameService.Repository
 {
     public class BattleshipRepository : IBattleshipRespository
     {
-       
         private Random random;
         private int[,] grid = new int[10, 10];
         private bool[,] shipSet = new bool[10, 10];
@@ -21,17 +20,19 @@ namespace BattleshipGameService.Repository
         private bool state = false;
         private int temp;
         private int r1, r2, c1, c2;
+        private bool res = false;
         DistroyerShip disShip;
+
         public BattleshipRepository()
         {
             random = new Random();
+            GenerateGrid();
+            GenerateEnimiShips();
         }
 
         public DistroyerShip GenerateEnimy()
         {
             disShip = new DistroyerShip();
-            GenerateGrid();
-            GenerateEnimiShips();
             AssignBattleshipShip();
             SetDistroyers();
             disShip.Battleship = positiosn;
@@ -41,9 +42,41 @@ namespace BattleshipGameService.Repository
             return disShip;
         }
 
-        public DistroyerShip KillEnimy(DistroyerShip enimy, int value)
+
+        public bool KillEnimy(DistroyerShip enimy, int value)
         {
-            throw new NotImplementedException();
+            disShip = enimy;
+
+            positiosn = disShip.Battleship;
+            dis1 = disShip.Ship1;
+            dis2 = disShip.Ship2;
+
+            temp = positiosn[0];
+
+            for (int i = 1; i < 6; i++)
+            {
+                shipSet[temp, i] = true;
+            }
+
+            r1 = dis1[0];
+            c1 = dis1[1];
+            r2 = dis1[2];
+            c2 = dis1[3];
+
+            shipSet[r1, c1] = true;
+            shipSet[r2, c2] = true;
+
+            r1 = dis2[0];
+            c1 = dis2[1];
+            r2 = dis2[2];
+            c2 = dis2[3];
+
+            shipSet[r1, c1] = true;
+            shipSet[r2, c2] = true;
+
+            res = HitMiss(value);
+
+            return res;
         }
 
         public DistroyerShip KilUser(DistroyerShip User)
@@ -161,20 +194,14 @@ namespace BattleshipGameService.Repository
             
         }
 
+        //Generate locations od Distroyerships 
         private void SetDistroyers()
         {
             int counter=0;
-            //GenerateEnimiShips();
-           // GenerateGrid();
             int number;
             int row ;
             int column;
 
-          //  for (int i = 1; i < 6; i++)
-            //{
-           //     column = slots[i];
-           //     shipSet[row,column] = true;
-           // }
             while (counter < 2)
             {
                 number = random.Next(100);
@@ -281,20 +308,29 @@ namespace BattleshipGameService.Repository
 
         }
 
-        public DistroyerShip GetDistroyers(int[] battleship)
+        //Check hit true or false
+        private bool HitMiss(int index)
         {
-            DistroyerShip ds = new DistroyerShip();
-            if (battleship != null)
+            bool final = false;
+            bool item = false;
+            for (int r = 0; r < 10; r++)
             {
-               // SetDistroyers(battleship);
-                ds.Ship1 = dis1;
-                ds.Ship2 = dis2;
-            }
-            else {
-                ds = null;
+                for (int c = 0; c < 10; c++)
+                {
+                    value = grid[r, c];
+                    if (value == index)
+                    {
+                        item = shipSet[r, c];
+                        if (item)
+                        {
+                            shipSet[r, c] = false;
+                            final = true;
+                        }
+                    }
+                }
             }
 
-            return ds;
+            return final;
         }
     }
 }

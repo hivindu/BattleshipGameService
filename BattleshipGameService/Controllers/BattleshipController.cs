@@ -38,16 +38,20 @@ namespace BattleshipGameService.Controllers
             return _distroyerShips;
         }
 
-        // GET api/<BattleshipController>/5
-        [HttpGet("[action]/battleship")]
+        [HttpPut("[action]/distroyerShip/value")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(DistroyerShip), (int)HttpStatusCode.OK)]
-        public DistroyerShip GetDistroyers(int[] battleship)
+        public bool ShotEnimy(DistroyerShip distroyerShip,int value)
         {
-            _distroyerShips = new DistroyerShip();
-            _distroyerShips = _repository.GetDistroyers(battleship);
+            bool res = false;
+            if (distroyerShip != null)
+            {
+                 res = _repository.KillEnimy(distroyerShip, value);
+            }
 
-            return _distroyerShips;
+            return res;
         }
+
+
     }
 }

@@ -9,8 +9,7 @@ namespace BattleshipGameService.Repository.Interface
     public interface IBattleshipRespository
     {
         DistroyerShip GenerateEnimy();
-        DistroyerShip GetDistroyers(int[] battleship);
-        DistroyerShip KillEnimy(DistroyerShip enimy,int value);
         DistroyerShip KilUser(DistroyerShip User);
+        bool KillEnimy(DistroyerShip enimy,int value);
     }
 }
