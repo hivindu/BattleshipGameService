@@ -1,3 +1,5 @@
+using BattleshipGameService.Repository;
+using BattleshipGameService.Repository.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +30,8 @@ namespace BattleshipGameService
         {
 
             services.AddControllers();
+            services.AddTransient<IBattleshipRespository, BattleshipRepository>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BattleshipGameService", Version = "v1" });

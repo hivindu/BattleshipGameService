@@ -8,8 +8,9 @@ namespace BattleshipGameService.Repository.Interface
 {
     public interface IBattleshipRespository
     {
-        Task<Ships> GenerateEnimy();
-        Task<Ships> KillEnimy(Ships enimy,int value);
-        Task<Ships> KilUser(Ships User);
+        int[] GenerateEnimy();
+        int[] GetDistroyers();
+        Ships KillEnimy(Ships enimy,int value);
+        Ships KilUser(Ships User);
     }
 }
