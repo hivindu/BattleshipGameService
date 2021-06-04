@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  battleshipgameservice:
+    
+    image: ${DOCKER_REGISTRY-}battleshipgameservice
+    build:
+      context: .
+      dockerfile: BattleshipGameService/Dockerfile
