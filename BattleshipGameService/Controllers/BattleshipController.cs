@@ -17,6 +17,7 @@ namespace BattleshipGameService.Controllers
     {
         private readonly IBattleshipRespository _repository;
         private Ships enimieas;
+        private DistroyerShip _distroyerShips;
 
         public BattleshipController(IBattleshipRespository repository)
         {
@@ -24,41 +25,29 @@ namespace BattleshipGameService.Controllers
             
         }
 
-        // GET: api/<BattleshipController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/<BattleshipController>/5
         [HttpGet("[action]")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Ships), (int)HttpStatusCode.OK)]
-        public int[] GetEnimies()
+        public DistroyerShip GetEnimies()
         {
-            enimieas = new Ships();
-            int[] res = _repository.GenerateEnimy();
+            _distroyerShips = new DistroyerShip();
+            _distroyerShips = _repository.GenerateEnimy();
 
-            return res;
+            return _distroyerShips;
         }
 
-        // POST api/<BattleshipController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        // GET api/<BattleshipController>/5
+        [HttpGet("[action]/battleship")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(DistroyerShip), (int)HttpStatusCode.OK)]
+        public DistroyerShip GetDistroyers(int[] battleship)
         {
-        }
+            _distroyerShips = new DistroyerShip();
+            _distroyerShips = _repository.GetDistroyers(battleship);
 
-        // PUT api/<BattleshipController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<BattleshipController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return _distroyerShips;
         }
     }
 }

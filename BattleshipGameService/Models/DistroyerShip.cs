@@ -7,6 +7,7 @@ namespace BattleshipGameService.Models
 {
     public class DistroyerShip
     {
+        public int[] Battleship { get; set; }
         public int[] Ship1 { get; set; }
         public int[] Ship2 { get; set; }
     }
