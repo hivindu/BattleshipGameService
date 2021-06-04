@@ -22,9 +22,11 @@ namespace BattleshipGameService.Repository
         private int r1, r2, c1, c2;
         private bool res = false;
         DistroyerShip disShip;
+        ResponsBody response;
 
         public BattleshipRepository()
         {
+            
             random = new Random();
             GenerateGrid();
             GenerateEnimiShips();
@@ -79,9 +81,35 @@ namespace BattleshipGameService.Repository
             return res;
         }
 
-        public DistroyerShip KilUser(DistroyerShip User)
+        public ResponsBody KilUser(DistroyerShip User)
         {
-            throw new NotImplementedException();
+            response = new ResponsBody();
+            disShip = User;
+            
+            temp = random.Next(100);
+            for (int r =0; r <10; r++)
+            {
+                for (int c=0; c<10; c++)
+                {
+                    value = grid[r, c];
+                     if (temp == value)
+                     {
+                        state = shipSet[r, c];
+                        if (state == true)
+                        {
+                            res = true;
+                        }
+                        else {
+                            res = false;
+                        }
+                        response.Hit = res;
+                        response.SelectedValue = temp;
+                    }
+                }
+            }
+
+            return response;
+            
         }
 
         // Generate 10x10 Grid
