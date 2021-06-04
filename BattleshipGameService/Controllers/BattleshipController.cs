@@ -16,7 +16,7 @@ namespace BattleshipGameService.Controllers
     public class BattleshipController : ControllerBase
     {
         private readonly IBattleshipRespository _repository;
-        private Ships enimieas;
+        
         private DistroyerShip _distroyerShips;
 
         public BattleshipController(IBattleshipRespository repository)
@@ -29,7 +29,7 @@ namespace BattleshipGameService.Controllers
         // GET api/<BattleshipController>/5
         [HttpGet("[action]")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(Ships), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(DistroyerShip), (int)HttpStatusCode.OK)]
         public DistroyerShip GetEnimies()
         {
             _distroyerShips = new DistroyerShip();

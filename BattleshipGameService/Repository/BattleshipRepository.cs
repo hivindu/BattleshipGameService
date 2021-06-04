@@ -9,7 +9,7 @@ namespace BattleshipGameService.Repository
 {
     public class BattleshipRepository : IBattleshipRespository
     {
-        private Ships enimy;
+       
         private Random random;
         private int[,] grid = new int[10, 10];
         private bool[,] shipSet = new bool[10, 10];
@@ -41,12 +41,12 @@ namespace BattleshipGameService.Repository
             return disShip;
         }
 
-        public Ships KillEnimy(Ships enimy, int value)
+        public DistroyerShip KillEnimy(DistroyerShip enimy, int value)
         {
             throw new NotImplementedException();
         }
 
-        public Ships KilUser(Ships User)
+        public DistroyerShip KilUser(DistroyerShip User)
         {
             throw new NotImplementedException();
         }

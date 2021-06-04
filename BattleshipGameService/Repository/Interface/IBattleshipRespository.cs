@@ -10,7 +10,7 @@ namespace BattleshipGameService.Repository.Interface
     {
         DistroyerShip GenerateEnimy();
         DistroyerShip GetDistroyers(int[] battleship);
-        Ships KillEnimy(Ships enimy,int value);
-        Ships KilUser(Ships User);
+        DistroyerShip KillEnimy(DistroyerShip enimy,int value);
+        DistroyerShip KilUser(DistroyerShip User);
     }
 }
