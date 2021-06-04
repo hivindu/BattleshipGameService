@@ -158,7 +158,17 @@ namespace BattleshipGameService.Repository
         private void SetDistroyers(int[] slots)
         {
             int counter=0;
+            GenerateEnimiShips();
+            GenerateGrid();
             int number;
+            int row = slots[0];
+            int column;
+
+            for (int i = 1; i < 6; i++)
+            {
+                column = slots[i];
+                shipSet[row,column] = true;
+            }
             while (counter < 2)
             {
                 number = random.Next(100);
@@ -176,7 +186,6 @@ namespace BattleshipGameService.Repository
                 }
             }
 
-            
         }
 
         public int[] GetDistroyers()
