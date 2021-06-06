@@ -158,7 +158,7 @@ namespace BattleshipGameService.Repository
             int number = random.Next(100);
             
             int coun;
-            int round = 1;
+            int round = 0;
             int res;
 
             
@@ -173,28 +173,30 @@ namespace BattleshipGameService.Repository
                         state = shipSet[r, c];
                         if (state != true)
                         {
-                            positiosn[0] = r;
+                            
                             if (c==0)
                             {
                                 coun = c;
 
-                                while (round < 6)
+                                while (round < 9)
                                 {
                                     shipSet[r, coun] = true;
                                     coun++;
-                                    positiosn[round] = coun;
-                                    round++;
+                                    positiosn[round] = r;
+                                    positiosn[(round+1)] = coun;
+                                    round+=2;
                                 }
                             }
                             else if (c==9)
                             {
                                 coun = c;
-                                while (round < 6)
+                                while (round < 9)
                                 {
                                     shipSet[r, coun] = true;
                                     coun--;
-                                    positiosn[round] = coun;
-                                    round++;
+                                    positiosn[round] = r;
+                                    positiosn[(round + 1)] = coun;
+                                    round += 2;
                                 }
                             }
                             else {
@@ -203,23 +205,26 @@ namespace BattleshipGameService.Repository
                                 if (res >= 5)
                                 {
                                     coun = c;
-                                    while (round < 6)
+                                    while (round < 9)
                                     {
                                         shipSet[r, coun] = true;
                                         coun++;
-                                        positiosn[round] = coun;
-                                        round++;
+                                        positiosn[round] = r;
+                                        positiosn[(round + 1)] = coun;
+
+                                        round += 2;
                                     }
                                 }
                                 else if (res < 5)
                                 {
                                     coun = c;
-                                    while (round < 6)
+                                    while (round < 9)
                                     {
                                         shipSet[r, coun] = true;
                                         coun--;
-                                        positiosn[round] = coun;
-                                        round++;
+                                        positiosn[round] = r;
+                                        positiosn[(round + 1)] = coun;
+                                        round += 2;
                                     }
                                 }
                             }
