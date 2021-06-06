@@ -112,6 +112,12 @@ namespace BattleshipGameService.Repository
             
         }
 
+
+        public DistroyerShip GeneratePlayer(DistroyerShip player)
+        {
+            throw new NotImplementedException();
+        }
+
         // Generate 10x10 Grid
         private void GenerateGrid()
         {
@@ -360,5 +366,6 @@ namespace BattleshipGameService.Repository
 
             return final;
         }
+
     }
 }
