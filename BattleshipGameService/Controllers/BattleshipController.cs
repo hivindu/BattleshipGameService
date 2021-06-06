@@ -66,7 +66,7 @@ namespace BattleshipGameService.Controllers
             return res;
         }
 
-        [HttpPut("[action]/player")]
+        [HttpPost("[action]/player")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(DistroyerShip), (int)HttpStatusCode.OK)]
         public DistroyerShip GenerateUserShips(DistroyerShip player)
