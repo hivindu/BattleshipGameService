@@ -25,7 +25,6 @@ namespace BattleshipGameService.Controllers
             
         }
 
-
         // GET api/<BattleshipController>/5
         [HttpGet("[action]")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -38,10 +37,10 @@ namespace BattleshipGameService.Controllers
             return _distroyerShips;
         }
 
-        [HttpPut("[action]/distroyerShip/value")]
+        [HttpPut("[action]/{value}")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(DistroyerShip), (int)HttpStatusCode.OK)]
-        public bool ShotEnimy(DistroyerShip distroyerShip,int value)
+        public bool ShotEnimy([FromBody] DistroyerShip distroyerShip,int value)
         {
             bool res = false;
             if (distroyerShip != null)
@@ -52,10 +51,10 @@ namespace BattleshipGameService.Controllers
             return res;
         }
 
-        [HttpPut("[action]/player")]
+        [HttpPut("[action]")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ResponsBody), (int)HttpStatusCode.OK)]
-        public ResponsBody ShotOnUser(DistroyerShip player)
+        public ResponsBody ShotOnUser([FromBody] DistroyerShip player)
         {
             ResponsBody res = new ResponsBody();
             if (player != null)
@@ -66,10 +65,10 @@ namespace BattleshipGameService.Controllers
             return res;
         }
 
-        [HttpPost("[action]/player")]
+        [HttpPost("[action]")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(DistroyerShip), (int)HttpStatusCode.OK)]
-        public DistroyerShip GenerateUserShips(DistroyerShip player)
+        public DistroyerShip GenerateUserShips([FromBody] DistroyerShip player)
         {
             _distroyerShips = new DistroyerShip();
             if (player != null)
