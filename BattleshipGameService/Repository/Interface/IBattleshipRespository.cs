@@ -11,6 +11,6 @@ namespace BattleshipGameService.Repository.Interface
         DistroyerShip GenerateEnimy();
         DistroyerShip GeneratePlayer(DistroyerShip player);
         ResponsBody KilUser(DistroyerShip User);
-        bool KillEnimy(DistroyerShip enimy,int value);
+        ResponsBody KillEnemy(DistroyerShip enimy,int value);
     }
 }

@@ -44,8 +44,9 @@ namespace BattleshipGameService.Repository
         }
 
 
-        public bool KillEnimy(DistroyerShip enimy, int value)
+        public ResponsBody KillEnemy(DistroyerShip enimy, int value)
         {
+            response = new ResponsBody();
             disShip = enimy;
 
             positiosn = disShip.Battleship;
@@ -77,7 +78,16 @@ namespace BattleshipGameService.Repository
 
             res = HitMiss(value);
 
-            return res;
+            if (res != true)
+            {
+                response.Hit = false;
+            }
+            else {
+                response.Hit = true;
+            }
+
+            response.SelectedValue = value;
+            return response;
         }
 
         public ResponsBody KilUser(DistroyerShip User)

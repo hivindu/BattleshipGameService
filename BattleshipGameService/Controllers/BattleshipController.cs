@@ -29,7 +29,7 @@ namespace BattleshipGameService.Controllers
         [HttpGet("[action]")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(DistroyerShip), (int)HttpStatusCode.OK)]
-        public DistroyerShip GetEnimies()
+        public DistroyerShip GetEnemies()
         {
             _distroyerShips = new DistroyerShip();
             _distroyerShips = _repository.GenerateEnimy();
@@ -39,13 +39,13 @@ namespace BattleshipGameService.Controllers
 
         [HttpPut("[action]/{value}")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(DistroyerShip), (int)HttpStatusCode.OK)]
-        public bool ShotEnimy([FromBody] DistroyerShip distroyerShip,int value)
+        [ProducesResponseType(typeof(ResponsBody), (int)HttpStatusCode.OK)]
+        public ResponsBody ShotEnemy([FromBody] DistroyerShip distroyerShip,int value)
         {
-            bool res = false;
+            ResponsBody res = new ResponsBody();
             if (distroyerShip != null)
             {
-                 res = _repository.KillEnimy(distroyerShip, value);
+                 res = _repository.KillEnemy(distroyerShip, value);
             }
 
             return res;
