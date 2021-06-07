@@ -1,4 +1,4 @@
-# BattleshipGame Application
+# Battleship Game Application
 > what is this repo ?
 
 This is a simple game called as battleship. This simple game allows a single user to hit on enemies location and enemy will shot on the players location. who collect all 9 marks, they will be the winner of this game.
