@@ -12,16 +12,16 @@ namespace BattleshipGameService.Repository
         private Random random;
         private int[,] grid = new int[10, 10];
         private bool[,] shipSet = new bool[10, 10];
-        private int[] positiosn= new int[10];
-        private int[] dis1 = new int[4];
-        private int[] dis2 = new int[4];
+        private int[] battlesipPosition= new int[10];
+        private int[] destroyerShip1 = new int[4];
+        private int[] destroyerShip2 = new int[4];
         private int count = 0;
         private int value;
         private bool state = false;
         private int temp;
-        private int r1, r2, c1, c2;
+        private int row1, row2, column1, column2;
         private bool res = false;
-        DistroyerShip disShip;
+        Ships disShip;
         ResponsBody response;
 
         public BattleshipRepository()
@@ -31,50 +31,50 @@ namespace BattleshipGameService.Repository
             GenerateEnimiShips();
         }
 
-        public DistroyerShip GenerateEnimy()
+        public Ships GenerateEnemy()
         {
-            disShip = new DistroyerShip();
+            disShip = new Ships();
             AssignBattleshipShip();
             SetDistroyers();
-            disShip.Battleship = positiosn;
-            disShip.Ship1 = dis1;
-            disShip.Ship2 = dis2;
+            disShip.Battleship = battlesipPosition;
+            disShip.DestroyerShip1 = destroyerShip1;
+            disShip.DestroyerShip2 = destroyerShip2;
 
             return disShip;
         }
 
 
-        public ResponsBody KillEnemy(DistroyerShip enimy, int value)
+        public ResponsBody KillEnemy(Ships enemy, int value)
         {
             response = new ResponsBody();
-            disShip = enimy;
+            disShip = enemy;
 
-            positiosn = disShip.Battleship;
-            dis1 = disShip.Ship1;
-            dis2 = disShip.Ship2;
+            battlesipPosition = disShip.Battleship;
+            destroyerShip1 = disShip.DestroyerShip1;
+            destroyerShip2 = disShip.DestroyerShip2;
 
-            temp = positiosn[0];
+            temp = battlesipPosition[0];
 
             for (int i = 1; i < 6; i++)
             {
                 shipSet[temp, i] = true;
             }
 
-            r1 = dis1[0];
-            c1 = dis1[1];
-            r2 = dis1[2];
-            c2 = dis1[3];
+            row1 = destroyerShip1[0];
+            column1 = destroyerShip1[1];
+            row2 = destroyerShip1[2];
+            column2 = destroyerShip1[3];
 
-            shipSet[r1, c1] = true;
-            shipSet[r2, c2] = true;
+            shipSet[row1, column1] = true;
+            shipSet[row2, column2] = true;
 
-            r1 = dis2[0];
-            c1 = dis2[1];
-            r2 = dis2[2];
-            c2 = dis2[3];
+            row1 = destroyerShip2[0];
+            column1 = destroyerShip2[1];
+            row2 = destroyerShip2[2];
+            column2 = destroyerShip2[3];
 
-            shipSet[r1, c1] = true;
-            shipSet[r2, c2] = true;
+            shipSet[row1, column1] = true;
+            shipSet[row2, column2] = true;
 
             res = HitMiss(value);
 
@@ -90,7 +90,7 @@ namespace BattleshipGameService.Repository
             return response;
         }
 
-        public ResponsBody KilUser(DistroyerShip User)
+        public ResponsBody KilUser(Ships User)
         {
             response = new ResponsBody();
             disShip = User;
@@ -122,15 +122,15 @@ namespace BattleshipGameService.Repository
         }
 
         // Locate player ship set
-        public DistroyerShip GeneratePlayer(DistroyerShip player)
+        public Ships GeneratePlayer(Ships player)
         {
-            disShip = new DistroyerShip();
+            disShip = new Ships();
             SetDistroyers(player);
             SetBattleship(player);
 
-            disShip.Battleship = positiosn;
-            disShip.Ship1 = dis1;
-            disShip.Ship2 = dis2;
+            disShip.Battleship = battlesipPosition;
+            disShip.DestroyerShip1 = destroyerShip1;
+            disShip.DestroyerShip2 = destroyerShip2;
 
             return disShip;
         }
@@ -150,7 +150,7 @@ namespace BattleshipGameService.Repository
             count = 0;
         }
 
-        //Generate enimiies ship list (make all false)
+        //Generate enemies ship list (make all false)
         private void GenerateEnimiShips()
         {
             for (int r = 0; r < 10; r++)
@@ -162,7 +162,7 @@ namespace BattleshipGameService.Repository
             }
         }
 
-        // locate enimies BattleshipShip 
+        // locate enemies BattleshipShip 
         private void AssignBattleshipShip()
         {
             int number = random.Next(100);
@@ -192,8 +192,8 @@ namespace BattleshipGameService.Repository
                                 {
                                     shipSet[r, coun] = true;
                                     coun++;
-                                    positiosn[round] = r;
-                                    positiosn[(round+1)] = coun;
+                                    battlesipPosition[round] = r;
+                                    battlesipPosition[(round+1)] = coun;
                                     round+=2;
                                 }
                             }
@@ -204,8 +204,8 @@ namespace BattleshipGameService.Repository
                                 {
                                     shipSet[r, coun] = true;
                                     coun--;
-                                    positiosn[round] = r;
-                                    positiosn[(round + 1)] = coun;
+                                    battlesipPosition[round] = r;
+                                    battlesipPosition[(round + 1)] = coun;
                                     round += 2;
                                 }
                             }
@@ -219,8 +219,8 @@ namespace BattleshipGameService.Repository
                                     {
                                         shipSet[r, coun] = true;
                                         coun++;
-                                        positiosn[round] = r;
-                                        positiosn[(round + 1)] = coun;
+                                        battlesipPosition[round] = r;
+                                        battlesipPosition[(round + 1)] = coun;
 
                                         round += 2;
                                     }
@@ -232,8 +232,8 @@ namespace BattleshipGameService.Repository
                                     {
                                         shipSet[r, coun] = true;
                                         coun--;
-                                        positiosn[round] = r;
-                                        positiosn[(round + 1)] = coun;
+                                        battlesipPosition[round] = r;
+                                        battlesipPosition[(round + 1)] = coun;
                                         round += 2;
                                     }
                                 }
@@ -289,10 +289,10 @@ namespace BattleshipGameService.Repository
                                 {
                                     shipSet[r, c] = true;
                                     shipSet[r, temp] = true;
-                                    r1 = r;
-                                    c1 = c;
-                                    r2 = r;
-                                    c2 = temp;
+                                    row1 = r;
+                                    column1 = c;
+                                    row2 = r;
+                                    column2 = temp;
                                 }
                                 else
                                 {
@@ -304,10 +304,10 @@ namespace BattleshipGameService.Repository
                                     {
                                         shipSet[r, c] = true;
                                         shipSet[r, temp] = true;
-                                        r1 = r;
-                                        c1 = c;
-                                        r2 = r;
-                                        c2 = temp;
+                                        row1 = r;
+                                        column1 = c;
+                                        row2 = r;
+                                        column2 = temp;
                                     } 
                                     else if (row != 0)
                                     {
@@ -318,10 +318,10 @@ namespace BattleshipGameService.Repository
                                             shipSet[r, c] = true;
                                             shipSet[row, c] = true;
 
-                                            r1 = r;
-                                            c1 = c;
-                                            r2 = row;
-                                            c2 = c;
+                                            row1 = r;
+                                            column1 = c;
+                                            row2 = row;
+                                            column2 = c;
                                         }
                                         else {
                                             row = row + 2;
@@ -330,10 +330,10 @@ namespace BattleshipGameService.Repository
                                             {
                                                 shipSet[r, c] = true;
                                                 shipSet[row, c] = true;
-                                                r1 = r;
-                                                c1 = c;
-                                                r2 = row;
-                                                c2 = c;
+                                                row1 = r;
+                                                column1 = c;
+                                                row2 = row;
+                                                column2 = c;
                                             }
                                         }
                                     }
@@ -342,15 +342,15 @@ namespace BattleshipGameService.Repository
                                 switch (counter)
                                 {
                                     case 0:
-                                        dis1[0] = r1;
-                                        dis1[1] = c1;
-                                        dis1[2] = r2;
-                                        dis1[3] = c2; break;
+                                        destroyerShip1[0] = row1;
+                                        destroyerShip1[1] = column1;
+                                        destroyerShip1[2] = row2;
+                                        destroyerShip1[3] = column2; break;
                                     case 1:
-                                        dis2[0] = r1;
-                                        dis2[1] = c1;
-                                        dis2[2] = r2;
-                                        dis2[3] = c2; break;
+                                        destroyerShip2[0] = row1;
+                                        destroyerShip2[1] = column1;
+                                        destroyerShip2[2] = row2;
+                                        destroyerShip2[3] = column2; break;
                                 }
                                 counter++;
                             }// end of checking status condition
@@ -364,9 +364,9 @@ namespace BattleshipGameService.Repository
         }
 
         // set player Distroyer ships
-        private void SetDistroyers(DistroyerShip player)
+        private void SetDistroyers(Ships player)
         {
-            DistroyerShip playership = player;
+            Ships playership = player;
             int counter = 2;
             int row = 0;
             int column =0;
@@ -376,11 +376,11 @@ namespace BattleshipGameService.Repository
                 switch (counter)
                 {
                     case 2:
-                        row = playership.Ship1[0];
-                        column = playership.Ship1[1];break;
+                        row = playership.DestroyerShip1[0];
+                        column = playership.DestroyerShip1[1];break;
                     case 1:
-                        row = playership.Ship2[0];
-                        column = playership.Ship2[1]; break;
+                        row = playership.DestroyerShip2[0];
+                        column = playership.DestroyerShip2[1]; break;
                 }
                 temp = column;
                 r = row;
@@ -405,10 +405,10 @@ namespace BattleshipGameService.Repository
                     {
                         shipSet[row, column] = true;
                         shipSet[row, temp] = true;
-                        r1 = row;
-                        c1 = column;
-                        r2 = row;
-                        c2 = temp;
+                        row1 = row;
+                        column1 = column;
+                        row2 = row;
+                        column2 = temp;
                     }
                     else
                     {
@@ -420,10 +420,10 @@ namespace BattleshipGameService.Repository
                             {
                                 shipSet[row, column] = true;
                                 shipSet[row, temp] = true;
-                                r1 = row;
-                                c1 = column;
-                                r2 = row;
-                                c2 = temp;
+                                row1 = row;
+                                column1 = column;
+                                row2 = row;
+                                column2 = temp;
                             }
                             else if (r != 0)
                             {
@@ -434,10 +434,10 @@ namespace BattleshipGameService.Repository
                                     shipSet[row, column] = true;
                                     shipSet[r, column] = true;
 
-                                    r1 = row;
-                                    c1 = column;
-                                    r2 = r;
-                                    c2 = column;
+                                    row1 = row;
+                                    column1 = column;
+                                    row2 = r;
+                                    column2 = column;
                                 }
                                 else
                                 {
@@ -447,10 +447,10 @@ namespace BattleshipGameService.Repository
                                     {
                                         shipSet[row, column] = true;
                                         shipSet[r, column] = true;
-                                        r1 = row;
-                                        c1 = column;
-                                        r2 = r;
-                                        c2 = column;
+                                        row1 = row;
+                                        column1 = column;
+                                        row2 = r;
+                                        column2 = column;
                                     }
                                 }
                             }
@@ -459,15 +459,15 @@ namespace BattleshipGameService.Repository
                     switch (counter)
                     {
                         case 2:
-                            dis1[0] = r1;
-                            dis1[1] = c1;
-                            dis1[2] = r2;
-                            dis1[3] = c2; break;
+                            destroyerShip1[0] = row1;
+                            destroyerShip1[1] = column1;
+                            destroyerShip1[2] = row2;
+                            destroyerShip1[3] = column2; break;
                         case 1:
-                            dis2[0] = r1;
-                            dis2[1] = c1;
-                            dis2[2] = r2;
-                            dis2[3] = c2; break;
+                            destroyerShip2[0] = row1;
+                            destroyerShip2[1] = column1;
+                            destroyerShip2[2] = row2;
+                            destroyerShip2[3] = column2; break;
                     }
                     counter--;
                 }
@@ -477,15 +477,15 @@ namespace BattleshipGameService.Repository
         }
 
         //set player Battlship
-        private void SetBattleship(DistroyerShip player)
+        private void SetBattleship(Ships player)
         {
-            DistroyerShip playership = player;
+            Ships playership = player;
             int row = playership.Battleship[0];
             int column = playership.Battleship[1];
             
             shipSet[row, column] = true;
-            positiosn[0] = row;
-            positiosn[1] = column;
+            battlesipPosition[0] = row;
+            battlesipPosition[1] = column;
             bool res = FindColumn(column,row);
 
             if (res != true)
@@ -529,8 +529,8 @@ namespace BattleshipGameService.Repository
                         {
                             temp--;
                             int t = i + 1;
-                            positiosn[i] = row;
-                            positiosn[t] = temp;
+                            battlesipPosition[i] = row;
+                            battlesipPosition[t] = temp;
                         }
                         res = true;
                         result = true;
@@ -562,8 +562,8 @@ namespace BattleshipGameService.Repository
                         {
                             temp++;
                             int t = i + 1;
-                            positiosn[i] = row;
-                            positiosn[t] = temp;
+                            battlesipPosition[i] = row;
+                            battlesipPosition[t] = temp;
                         }
                         res = true;
                         result = true;
@@ -607,8 +607,8 @@ namespace BattleshipGameService.Repository
                                 {
                                     temp--;
                                     int t = i + 1;
-                                    positiosn[i] = row;
-                                    positiosn[t] = temp;
+                                    battlesipPosition[i] = row;
+                                    battlesipPosition[t] = temp;
                                 }
                                 res = true;
                                 result = true;
@@ -624,8 +624,8 @@ namespace BattleshipGameService.Repository
                         {
                             temp++;
                             int t = i + 1;
-                            positiosn[i] = row;
-                            positiosn[t] = temp;
+                            battlesipPosition[i] = row;
+                            battlesipPosition[t] = temp;
                         }
                         res = true;
                         result = true;
@@ -671,8 +671,8 @@ namespace BattleshipGameService.Repository
                         {
                             temp--;
                             int t = i + 1;
-                            positiosn[i] = temp;
-                            positiosn[t] = column;
+                            battlesipPosition[i] = temp;
+                            battlesipPosition[t] = column;
                         }
                         res = true;
                         result = true;
@@ -705,8 +705,8 @@ namespace BattleshipGameService.Repository
                         {
                             temp++;
                             int t = i + 1;
-                            positiosn[i] = temp;
-                            positiosn[t] = column;
+                            battlesipPosition[i] = temp;
+                            battlesipPosition[t] = column;
                         }
                         res = true;
                         result = true;
@@ -750,8 +750,8 @@ namespace BattleshipGameService.Repository
                                 {
                                     temp--;
                                     int t = i + 1;
-                                    positiosn[i] = temp;
-                                    positiosn[t] = column;
+                                    battlesipPosition[i] = temp;
+                                    battlesipPosition[t] = column;
                                 }
                                 res = true;
                                 result = true;
@@ -767,8 +767,8 @@ namespace BattleshipGameService.Repository
                         {
                             temp++;
                             int t = i + 1;
-                            positiosn[i] = temp;
-                            positiosn[t] = column;
+                            battlesipPosition[i] = temp;
+                            battlesipPosition[t] = column;
                         }
                         res = true;
                         result = true;

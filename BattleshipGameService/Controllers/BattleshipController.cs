@@ -17,7 +17,7 @@ namespace BattleshipGameService.Controllers
     {
         private readonly IBattleshipRespository _repository;
         
-        private DistroyerShip _distroyerShips;
+        private Ships _destroyerShips;
 
         public BattleshipController(IBattleshipRespository repository)
         {
@@ -28,24 +28,37 @@ namespace BattleshipGameService.Controllers
         // GET api/<BattleshipController>/5
         [HttpGet("[action]")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(DistroyerShip), (int)HttpStatusCode.OK)]
-        public DistroyerShip GetEnemies()
+        [ProducesResponseType(typeof(Ships), (int)HttpStatusCode.OK)]
+        public Ships GetEnemies()
         {
-            _distroyerShips = new DistroyerShip();
-            _distroyerShips = _repository.GenerateEnimy();
+            _destroyerShips = new Ships();
+            _destroyerShips = _repository.GenerateEnemy();
 
-            return _distroyerShips;
+            return _destroyerShips;
+        }
+
+        [HttpPost("[action]")]
+        [ProducesResponseType(typeof(Ships), (int)HttpStatusCode.OK)]
+        public Ships GenerateUserShips([FromBody] Ships player)
+        {
+            _destroyerShips = new Ships();
+            if (player != null)
+            {
+                _destroyerShips = _repository.GeneratePlayer(player);
+            }
+
+            return _destroyerShips;
         }
 
         [HttpPut("[action]/{value}")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ResponsBody), (int)HttpStatusCode.OK)]
-        public ResponsBody ShotEnemy([FromBody] DistroyerShip distroyerShip,int value)
+        public ResponsBody ShotEnemy([FromBody] Ships destroyerShip,int value)
         {
             ResponsBody res = new ResponsBody();
-            if (distroyerShip != null)
+            if (destroyerShip != null)
             {
-                 res = _repository.KillEnemy(distroyerShip, value);
+                 res = _repository.KillEnemy(destroyerShip, value);
             }
 
             return res;
@@ -54,7 +67,7 @@ namespace BattleshipGameService.Controllers
         [HttpPut("[action]")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ResponsBody), (int)HttpStatusCode.OK)]
-        public ResponsBody ShotOnUser([FromBody] DistroyerShip player)
+        public ResponsBody ShotOnUser([FromBody] Ships player)
         {
             ResponsBody res = new ResponsBody();
             if (player != null)
@@ -65,19 +78,7 @@ namespace BattleshipGameService.Controllers
             return res;
         }
 
-        [HttpPost("[action]")]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(DistroyerShip), (int)HttpStatusCode.OK)]
-        public DistroyerShip GenerateUserShips([FromBody] DistroyerShip player)
-        {
-            _distroyerShips = new DistroyerShip();
-            if (player != null)
-            {
-                _distroyerShips = _repository.GeneratePlayer(player);
-            }
-
-            return _distroyerShips;
-        }
+        
 
     }
 }

@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace BattleshipGameService.Models
 {
-    public class DistroyerShip
+    public class Ships
     {
         public int[] Battleship { get; set; }
-        public int[] Ship1 { get; set; }
-        public int[] Ship2 { get; set; }
+        public int[] DestroyerShip1 { get; set; }
+        public int[] DestroyerShip2 { get; set; }
     }
 }
