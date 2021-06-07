@@ -14,6 +14,7 @@ namespace BattleShipWebClient.Controllers
         private static Ships ship;
         private static HttpClient client;
         private static ResponseBody _reponse;
+        private static string basePathString= "http://localhost:8000";
 
         public BattleshipGameController()
         {
@@ -27,7 +28,7 @@ namespace BattleShipWebClient.Controllers
             client = new HttpClient();
 
             try {
-                client.BaseAddress = new Uri("http://localhost:8000");
+                client.BaseAddress = new Uri(basePathString);
                 var response = client.PostAsJsonAsync("api/Battleship/GenerateUserShips", userShips).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -54,7 +55,7 @@ namespace BattleShipWebClient.Controllers
 
             try
             {
-                client.BaseAddress = new Uri("http://localhost:8000");
+                client.BaseAddress = new Uri(basePathString);
                 var response = client.GetAsync("api/Battleship/GetEnemies").Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -81,7 +82,7 @@ namespace BattleShipWebClient.Controllers
 
             try
             {
-                client.BaseAddress = new Uri("http://localhost:8000");
+                client.BaseAddress = new Uri(basePathString);
                 HttpResponseMessage response = client.PutAsJsonAsync("api/Battleship/ShotEnemy/" + point + "", enimiShips).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -108,7 +109,7 @@ namespace BattleShipWebClient.Controllers
 
             try
             {
-                client.BaseAddress = new Uri("http://localhost:8000");
+                client.BaseAddress = new Uri(basePathString);
                 HttpResponseMessage response = client.PutAsJsonAsync("/api/Battleship/ShotOnUser", playerShips).Result;
                 if (response.IsSuccessStatusCode)
                 {

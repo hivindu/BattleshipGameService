@@ -1,13 +1,9 @@
 ﻿using BattleShipWebClient.Controllers;
 using BattleShipWebClient.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Drawing;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Drawing;
-
 
 namespace BattleShipWebClient
 {
@@ -33,7 +29,8 @@ namespace BattleShipWebClient
             {
                 Restart();
             }
-            else {
+            else
+            {
                 ShipLocationEnimy = (bool[,])Session["EnemyShipsBool"];
                 playerShips = (Ships)Session["PlayersShips"];
                 tempShip = (Ships)Session["tempShip"];
@@ -52,7 +49,7 @@ namespace BattleShipWebClient
 
         protected void btn1_Click(object sender, EventArgs e)
         {
-           // not in use
+            // not in use
         }
 
         protected void A1_Click(object sender, EventArgs e)
@@ -65,28 +62,32 @@ namespace BattleShipWebClient
                 {
                     var button = (Button)sender;
                     button.Enabled = false;
-                    button.BackColor = Color.Orange;
+                    button.CssClass = "button";
+                    button.BackColor = Color.FromArgb(97, 102, 105);
 
                     string id = button.ClientID;
                     switch (ShipsCount)
                     {
                         case 3:
-                            tempShip.Battleship = FindIndex(id,1); break;
+                            tempShip.Battleship = FindIndex(id, 1); break;
                         case 2:
-                            res =CheckDistence(id);
+                            res = CheckDistence(id);
                             if (res != true)
                             {
                                 ShipsCount = 3;
                                 button.Enabled = true;
-                                button.BackColor = Color.White;
+                                button.CssClass = "button";
+                                //button.BackColor = Color.White;
                                 Page.ClientScript.RegisterStartupScript(this.GetType(), "callinvalidIndex", "invalidIndex()", true);
                             }
-                            else {
-                                tempShip.destroyerShip1 = FindIndex(id,1); 
+                            else
+                            {
+                                tempShip.destroyerShip1 = FindIndex(id, 1);
                             }
                             break;
+
                         case 1:
-                            tempShip.destroyerShip2 = FindIndex(id,1); break;
+                            tempShip.destroyerShip2 = FindIndex(id, 1); break;
                     }
                     Session["tempShip"] = tempShip;
                     ShipsCount--;
@@ -94,7 +95,7 @@ namespace BattleShipWebClient
                 }
 
                 if (ShipsCount == 0)
-                {   
+                {
                     enimy_panel.Visible = true;
                     tempShip = BattleshipGameController.GeneratePlayerShips(tempShip);
                     playerShips = tempShip;
@@ -107,7 +108,6 @@ namespace BattleShipWebClient
                     lblhint.Text = "Click a button on enimis grid to start!";
                 }
             }
-            
         }
 
         protected void AA1_Click(object sender, EventArgs e)
@@ -126,12 +126,15 @@ namespace BattleShipWebClient
             if (result != true)
             {
                 EnimiesGrid[row, column].Enabled = false;
-                EnimiesGrid[row, column].BackColor = Color.Blue;
+                EnimiesGrid[row, column].CssClass = "button";
+                EnimiesGrid[row, column].BackColor =  Color.FromArgb(2, 7, 93);
                 lblShot.Text = "MISS";
             }
-            else {
+            else
+            {
                 EnimiesGrid[row, column].Enabled = false;
-                EnimiesGrid[row, column].BackColor = Color.Red;
+                EnimiesGrid[row, column].CssClass = "button";
+                EnimiesGrid[row, column].BackColor = Color.FromArgb(231, 84, 128);
                 lblShot.Text = "HIT";
                 playerScore++;
                 lblScore.Text = Convert.ToString(playerScore);
@@ -158,11 +161,11 @@ namespace BattleShipWebClient
                 {
                     results = false;
                 }
-                else {
+                else
+                {
                     results = true;
                 }
             }
-
         }
 
         //Generate Player Button Grid
@@ -204,10 +207,8 @@ namespace BattleShipWebClient
                     {
                         PlayerGrid[r, c] = btn;
                     }
-
                 }
             }
-
         }
 
         //Generate Enimies button grid
@@ -250,7 +251,6 @@ namespace BattleShipWebClient
                         EnimiesGrid[r, c] = btn;
                         Session["EnimiesGrid"] = EnimiesGrid;
                     }
-
                 }
             }
         }
@@ -258,14 +258,14 @@ namespace BattleShipWebClient
         private int[] FindIndex(string id, int type)
         {
             int[] values = new int[2];
-            string buttonId ="";
+            string buttonId = "";
             if (type > 0)
             {
                 for (int r = 0; r < 10; r++)
                 {
                     for (int c = 0; c < 10; c++)
                     {
-                        buttonId = PlayerGrid[r,c].ClientID;
+                        buttonId = PlayerGrid[r, c].ClientID;
                         if (buttonId == id)
                         {
                             values[0] = r;
@@ -275,10 +275,11 @@ namespace BattleShipWebClient
                     }
                 }
             }
-            else {
+            else
+            {
                 for (int a = 0; a < 10; a++)
                 {
-                    for (int b = 0; b< 10; b++)
+                    for (int b = 0; b < 10; b++)
                     {
                         buttonId = EnimiesGrid[a, b].ClientID;
                         if (buttonId == id)
@@ -290,7 +291,7 @@ namespace BattleShipWebClient
                     }
                 }
             }
-            
+
             return values;
         }
 
@@ -315,7 +316,8 @@ namespace BattleShipWebClient
                         {
                             rowCount = (row + 1) - (r + 1);
                         }
-                        else {
+                        else
+                        {
                             rowCount = (r + 1) - (row + 1);
                         }
 
@@ -323,16 +325,16 @@ namespace BattleShipWebClient
                         {
                             columnCount = column - c;
                         }
-                        else {
-                            columnCount = (c+1) - (column+1);
+                        else
+                        {
+                            columnCount = (c + 1) - (column + 1);
                         }
-
 
                         if (row == r && columnCount < 4)
                         {
                             res = false;
                         }
-                        else 
+                        else
                         {
                             if (column == c && rowCount < 4)
                             {
@@ -357,7 +359,7 @@ namespace BattleShipWebClient
             int[] battleShipPossitions = tempShip.Battleship;
             int[] distroyerShip1 = tempShip.destroyerShip1;
             int[] distroyerShip2 = tempShip.destroyerShip2;
-            int column =0, row=0;
+            int column = 0, row = 0;
 
             for (int i = 0; i < 9; i += 2)
             {
@@ -365,23 +367,25 @@ namespace BattleShipWebClient
                 row = battleShipPossitions[i];
                 column = battleShipPossitions[temp];
                 PlayerGrid[row, column].Enabled = false;
-                PlayerGrid[row, column].BackColor = Color.Orange;
+                PlayerGrid[row, column].CssClass = "button";
+                PlayerGrid[row, column].BackColor = Color.FromArgb(97, 102, 105);
                 ShipLocationPlayer[row, column] = true;
-                
             }
 
-            for (int c=0;c<4;c+=2)
+            for (int c = 0; c < 4; c += 2)
             {
                 temp = c + 1;
                 row = distroyerShip1[c];
                 column = distroyerShip1[temp];
                 PlayerGrid[row, column].Enabled = false;
-                PlayerGrid[row, column].BackColor = Color.Orange;
+                PlayerGrid[row, column].CssClass = "button";
+                PlayerGrid[row, column].BackColor = Color.FromArgb(97, 102, 105);
                 ShipLocationPlayer[row, column] = true;
                 row = distroyerShip2[c];
                 column = distroyerShip2[temp];
                 PlayerGrid[row, column].Enabled = false;
-                PlayerGrid[row, column].BackColor = Color.Orange;
+                PlayerGrid[row, column].CssClass = "button";
+                PlayerGrid[row, column].BackColor = Color.FromArgb(97, 102, 105);
                 ShipLocationPlayer[row, column] = true;
             }
 
@@ -391,7 +395,6 @@ namespace BattleShipWebClient
 
         private void GenerateEnemyShips(Ships ships)
         {
-
             tempShip = ships;
             int[] battleShipPossitions = tempShip.Battleship;
             int[] distroyerShip1 = tempShip.destroyerShip1;
@@ -434,7 +437,7 @@ namespace BattleShipWebClient
         }
 
         // fire a shot onusers ship
-        private bool shotOnPlayer(ResponseBody body) 
+        private bool shotOnPlayer(ResponseBody body)
         {
             ResponseBody result = body;
             int value = result.SelectedValue;
@@ -447,17 +450,16 @@ namespace BattleShipWebClient
             bool resultsLocation = false;
             int column = 0, row = 0;
             bool available = false;
-            
 
-            for (int r=0; r<10; r++)
+            for (int r = 0; r < 10; r++)
             {
                 for (int c = 0; c < 10; c++)
                 {
-                    returnValue= ValueGrid[r, c];
+                    returnValue = ValueGrid[r, c];
 
                     if (returnValue == value)
                     {
-                       location= ShipLocationPlayer[r, c];
+                        location = ShipLocationPlayer[r, c];
 
                         for (int i = 0; i < 9; i += 2)
                         {
@@ -504,8 +506,9 @@ namespace BattleShipWebClient
                             }
                             else
                             {
-                                PlayerGrid[r,c].Enabled = false;
-                                PlayerGrid[r,c].BackColor = Color.Red;
+                                PlayerGrid[r, c].Enabled = false;
+                                PlayerGrid[r, c].CssClass = "button";
+                                PlayerGrid[r, c].BackColor = Color.FromArgb(231, 84, 128);
                                 ShipLocationPlayer[r, c] = false;
                                 resultsLocation = true;
                                 enemyScore++;
@@ -522,11 +525,11 @@ namespace BattleShipWebClient
                                 {
                                     Response.Redirect("index.aspx");
                                     Restart();
-                                   
                                 }
                             }
                         }
-                        else {
+                        else
+                        {
                             location = PlayerGrid[r, c].Enabled;
                             if (location != true)
                             {
@@ -534,23 +537,22 @@ namespace BattleShipWebClient
                                 r = 10;
                                 c = 10;
                             }
-                            else {
+                            else
+                            {
                                 PlayerGrid[r, c].Enabled = false;
-                                PlayerGrid[r, c].BackColor = Color.Blue;
+                                PlayerGrid[r, c].CssClass = "button";
+                                PlayerGrid[r, c].BackColor = Color.FromArgb(2, 7, 93);
                                 resultsLocation = true;
                                 r = 10;
                                 c = 10;
                             }
-                           
                         }
-                        
                     }
                 }
             }
             Session["Player"] = PlayerGrid;
             Session["ShipLocationsPlayer"] = ShipLocationPlayer;
             return resultsLocation;
-
         }
 
         private void Restart()
