@@ -8,6 +8,7 @@ This is a simple game called as battleship. This simple game allows a single use
 - Asp.Net C#
 -.Net Core 
 - Docker
+- Swagger
 
 > Prerequisite to run this application
 
