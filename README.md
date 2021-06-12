@@ -25,4 +25,4 @@ This is a simple game called as battleship. This simple game allows a single use
 - Then type this on prompted comand prompt to compose application service to docker container " docker-compoe -f docker-compose.yml -f docker-compose.override.yml up -d"
 - Run the application which is open in visual studio.
 
-Thank you and  Happy coding :smiley: !
+Happy coding :smiley: !
